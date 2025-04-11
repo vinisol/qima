@@ -1,0 +1,101 @@
+<div class="product-form-container">
+  <h2>{{ isEditMode ? "Edit Product" : "Add Product" }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSave()">
+    <div class="form-group">
+      <label for="id">ID</label>
+      <input id="id" type="text" formControlName="id" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" type="text" formControlName="name" />
+      <div
+        *ngIf="submitted && form.get('name')?.errors?.['required']"
+        class="error"
+      >
+        Name is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <div
+        *ngIf="submitted && form.get('description')?.errors?.['required']"
+        class="error"
+      >
+        Description is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input id="price" type="number" step="0.01" formControlName="price" />
+      <div
+        *ngIf="submitted && form.get('price')?.errors?.['required']"
+        class="error"
+      >
+        Price is required
+      </div>
+      <div
+        *ngIf="submitted && form.get('price')?.errors?.['pattern']"
+        class="error"
+      >
+        Enter a valid price with up to 2 decimals
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="available">Available</label>
+      <select id="available" formControlName="available">
+        <option [value]="true">True</option>
+        <option [value]="false">False</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="sku">SKU</label>
+      <input id="sku" type="text" formControlName="sku" />
+      <div
+        *ngIf="submitted && form.get('sku')?.errors?.['required']"
+        class="error"
+      >
+        SKU is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select id="category" formControlName="categoryId">
+        <option value="" disabled>Select a category</option>
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.categoryPath }}
+        </option>
+      </select>
+      <div
+        *ngIf="submitted && form.get('categoryId')?.errors?.['required']"
+        class="error"
+      >
+        Category is required
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="createdAt">Created At</label>
+      <input id="createdAt" type="text" formControlName="createdAt" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="updatedAt">Updated At</label>
+      <input id="updatedAt" type="text" formControlName="updatedAt" readonly />
+    </div>
+
+    <div *ngIf="message" class="message">{{ message }}</div>
+
+    <div class="button-group">
+      <button type="submit" class="save">Save</button>
+      <button type="button" class="cancel" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>

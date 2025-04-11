@@ -1,0 +1,76 @@
+<div class="product-list-container">
+  <div class="top-bar">
+    <h2>Product List</h2>
+    <button class="logout-button" (click)="logout()">Logout</button>
+  </div>
+
+  <button class="add-button" (click)="goToAdd()">+ Add New Product</button>
+
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th (click)="sortBy('id')">ID</th>
+        <th (click)="sortBy('name')">Name</th>
+        <th (click)="sortBy('description')">Description</th>
+        <th (click)="sortBy('categoryPath')">Category</th>
+        <th (click)="sortBy('price')">Price</th>
+        <th (click)="sortBy('available')">Available</th>
+        <th (click)="sortBy('sku')">SKU</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.categoryPath }}</td>
+        <td>{{ product.price | currency }}</td>
+        <td>{{ product.available ? "Yes" : "No" }}</td>
+        <td>{{ product.sku }}</td>
+        <td>
+          <button
+            class="edit"
+            (click)="goToEdit(product.id)"
+            title="Edit product"
+          >
+            ✏️
+          </button>
+          <button
+            class="delete"
+            (click)="deleteProduct(product.id)"
+            title="Delete product"
+          >
+            🗑️
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button [disabled]="currentPage === 0" (click)="goToPage(0)">
+      &laquo; First
+    </button>
+
+    <button [disabled]="currentPage === 0" (click)="goToPage(currentPage - 1)">
+      &lsaquo; Prev
+    </button>
+
+    <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+
+    <button
+      [disabled]="currentPage + 1 >= totalPages"
+      (click)="goToPage(currentPage + 1)"
+    >
+      Next &rsaquo;
+    </button>
+
+    <button
+      [disabled]="currentPage + 1 >= totalPages"
+      (click)="goToPage(totalPages - 1)"
+    >
+      Last &raquo;
+    </button>
+  </div>
+</div>
